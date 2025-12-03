@@ -1,7 +1,7 @@
 // Proxy CORS Anywhere para listar máquinas do Apps Script
 export default async function handler(req, res) {
   const TARGET_URL =
-    "https://script.google.com/macros/s/AKfycbw15T-ZOIYi4eeDxS5h8jfYDLCSIB38ujsDsGlz4H_NB_tZnvpthypXsjxkNbiAd5mq/exec";
+    "https://script.google.com/macros/s/AKfycbz295awE8ryEZorO1KIqO8j1mpv2qVTOrPagt--XNHyue0ATFTbs1RlmQnnyX1Anad6/exec";
 
   try {
     const response = await fetch(TARGET_URL, {
