@@ -1,20 +1,31 @@
+// Proxy CORS Anywhere para listar máquinas do Apps Script
 export default async function handler(req, res) {
-  const API_URL =
+  const TARGET_URL =
     "https://script.google.com/macros/s/AKfycbw15T-ZOIYi4eeDxS5h8jfYDLCSIB38ujsDsGlz4H_NB_tZnvpthypXsjxkNbiAd5mq/exec";
 
   try {
-    // Faz a requisição com redirecionamento manual
-    const response = await fetch(API_URL, { redirect: "follow" });
-    const text = await response.text();
+    const response = await fetch(TARGET_URL, {
+      method: "GET",
+      redirect: "follow",
+      headers: {
+        "User-Agent": "Mozilla/5.0",
+        "Accept": "application/json,text/plain,*/*"
+      }
+    });
 
-    // Alguns Apps Script retornam texto simples, outros JSON.
-    const data = text.startsWith("[") ? JSON.parse(text) : [];
+    const text = await response.text();
+    let data;
+    try {
+      data = JSON.parse(text);
+    } catch {
+      data = [];
+    }
+
     res.setHeader("Access-Control-Allow-Origin", "*");
+    res.setHeader("Access-Control-Allow-Methods", "GET,OPTIONS");
     res.status(200).json(data);
   } catch (err) {
-    res.status(500).json({
-      error: "Erro ao buscar máquinas",
-      details: err.message,
-    });
+    console.error("Erro proxy máquinas:", err);
+    res.status(500).json({ error: "Erro no proxy Vercel", details: err.message });
   }
 }
