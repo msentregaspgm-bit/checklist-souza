@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Checklist Souza</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div class="container">
+      <img src="logo.png" class="logo" alt="Souza Logo" />
+      <h1>Checklist de Máquinas</h1>
+
+      <div id="login">
+        <input id="operador" placeholder="Nome do Operador" />
+        <select id="maquina"></select>
+        <select id="tipo">
+          <option value="Retirada">Retirada</option>
+          <option value="Devolução">Devolução</option>
+        </select>
+        <button onclick="iniciarChecklist()">Iniciar</button>
+      </div>
+
+      <div id="checklist" style="display:none;">
+        <h2 id="tituloChecklist"></h2>
+        <div id="itensContainer"></div>
+
+        <h3>Assinatura do Operador</h3>
+        <canvas id="assinatura" width="300" height="150"></canvas><br />
+        <button onclick="limparAssinatura()">Limpar</button>
+        <button class="enviar" onclick="enviar()">Enviar Checklist</button>
+      </div>
+    </div>
+
+    <script src="script.js"></script>
+  </body>
+</html>
