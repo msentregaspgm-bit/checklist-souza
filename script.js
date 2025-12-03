@@ -1,4 +1,5 @@
-const API_URL = "https://script.google.com/macros/s/AKfycbw15T-ZOIYi4eeDxS5h8jfYDLCSIB38ujsDsGlz4H_NB_tZnvpthypXsjxkNbiAd5mq/exec";
+const API_MAQUINAS = "/api/maquinas";
+const API_CHECKLIST = "/api/checklist";
 
 let operador, maquina, placa, tipo, ctx;
 const checklist = [
@@ -9,16 +10,20 @@ const checklist = [
 ];
 
 async function carregarMaquinas() {
-  const res = await fetch(API_URL);
-  const data = await res.json();
-  const sel = document.getElementById("maquina");
-  sel.innerHTML = "<option value=''>Selecione a máquina</option>";
-  data.forEach(m => {
-    const opt = document.createElement("option");
-    opt.value = m.nome;
-    opt.text = `${m.nome} (${m.placa})`;
-    sel.add(opt);
-  });
+  try {
+    const res = await fetch(API_MAQUINAS);
+    const data = await res.json();
+    const sel = document.getElementById("maquina");
+    sel.innerHTML = "<option value=''>Selecione a máquina</option>";
+    data.forEach(m => {
+      const opt = document.createElement("option");
+      opt.value = m.nome;
+      opt.text = `${m.nome} (${m.placa})`;
+      sel.add(opt);
+    });
+  } catch (err) {
+    alert("Erro ao carregar máquinas. Verifique a conexão.");
+  }
 }
 
 function iniciarChecklist() {
@@ -78,7 +83,7 @@ async function enviar() {
 
   const dados = { operador, maquina, placa: "", tipo, assinatura, items };
 
-  const res = await fetch(API_URL, {
+  const res = await fetch(API_CHECKLIST, {
     method: "POST",
     body: JSON.stringify(dados),
     headers: { "Content-Type": "application/json" },
