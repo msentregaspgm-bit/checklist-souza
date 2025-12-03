@@ -1,8 +1,6 @@
-// Proxy CORS Anywhere para enviar checklists ao Apps Script
+// Proxy da Vercel para enviar checklists ao Google Apps Script
 export default async function handler(req, res) {
-  const TARGET_URL =
-    "https://script.google.com/macros/s/AKfycbw15T-ZOIYi4eeDxS5h8jfYDLCSIB38ujsDsGlz4H_NB_tZnvpthypXsjxkNbiAd5mq/exec";
-
+  const TARGET_URL = "https://script.google.com/macros/s/AKfycbzlHcLcPfDvlxythlC1VneFWmicWkTdTy9K1e-kCrDQV_VEPwIqNts2EKIg-k9gNeTL/exec";
   try {
     const response = await fetch(TARGET_URL, {
       method: "POST",
@@ -20,7 +18,6 @@ export default async function handler(req, res) {
     res.setHeader("Access-Control-Allow-Methods", "POST,OPTIONS");
     res.status(200).json({ result: text });
   } catch (err) {
-    console.error("Erro proxy checklist:", err);
     res.status(500).json({ error: "Erro no proxy Vercel", details: err.message });
   }
 }

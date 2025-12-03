@@ -1,5 +1,5 @@
-const API_MAQUINAS = "/api/maquinas";
 const API_CHECKLIST = "/api/checklist";
+const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzlHcLcPfDvlxythlC1VneFWmicWkTdTy9K1e-kCrDQV_VEPwIqNts2EKIg-k9gNeTL/exec";
 
 let operador, maquina, placa, tipo, ctx;
 const checklist = [
@@ -9,10 +9,11 @@ const checklist = [
   {categoria:"Itens Gerais", itens:["Freio de estacionamento","Extintor de incêndio","Caixa de ferramentas"]}
 ];
 
-async function carregarMaquinas() {
-  try {
-    const res = await fetch(API_MAQUINAS);
-    const data = await res.json();
+function carregarMaquinas() {
+  const script = document.createElement("script");
+  const callbackName = "callbackMaquinas";
+
+  window[callbackName] = function (data) {
     const sel = document.getElementById("maquina");
     sel.innerHTML = "<option value=''>Selecione a máquina</option>";
     data.forEach(m => {
@@ -21,9 +22,11 @@ async function carregarMaquinas() {
       opt.text = `${m.nome} (${m.placa})`;
       sel.add(opt);
     });
-  } catch (err) {
-    alert("Erro ao carregar máquinas. Verifique a conexão.");
-  }
+  };
+
+  const url = SCRIPT_URL + "?callback=" + callbackName;
+  script.src = url;
+  document.body.appendChild(script);
 }
 
 function iniciarChecklist() {
