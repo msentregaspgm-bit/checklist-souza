@@ -13,30 +13,36 @@
 
       <div id="login">
         <input id="operador" placeholder="Nome do Operador" />
+
         <select id="tipoMaquina" onchange="filtrarMaquinas()">
           <option value="">Selecione o tipo de máquina</option>
         </select>
+
         <select id="maquina">
           <option value="">Selecione a máquina</option>
         </select>
+
         <select id="tipo">
           <option value="Retirada">Retirada</option>
           <option value="Devolução">Devolução</option>
         </select>
+
         <button onclick="iniciarChecklist()">Iniciar Checklist</button>
       </div>
 
       <div id="checklist" style="display:none;">
         <h2 id="tituloChecklist"></h2>
+
         <div id="itensContainer"></div>
 
         <h3>Assinatura do Operador</h3>
         <canvas id="assinatura" width="300" height="150"></canvas><br />
+
         <button onclick="limparAssinatura()">Limpar</button>
         <button class="enviar" onclick="enviar()">Enviar Checklist</button>
       </div>
     </div>
 
-    <script src="script.js"></script>
+    <script type="module" src="script.js"></script>
   </body>
 </html>

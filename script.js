@@ -1,15 +1,12 @@
-const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyJbwS4d9c14RHrTNBjbrRlTQfZg3728tzSDOvH_kxBvenJrD4xn1wS7UGJsh7nS3VE/exec";
-const API_CHECKLIST = "/api/checklist";
+import checklistsPorTipo from "./checklists.js";
+
+const SCRIPT_URL =
+  "https://script.google.com/macros/s/AKfycbzW8O42NFSodM3lndtKoHl8kH7KC3BqeVz8zJhYuO4GEON0RVOKc6EjYVCkE5qLh-89/exec";
+
+const API_CHECKLIST = SCRIPT_URL;
 
 let maquinas = [];
 let operador, maquina, tipo, ctx;
-
-const checklist = [
-  {categoria:"Motor", itens:["Nível do óleo do motor","Nível do óleo hidráulico","Nível de arrefecimento"]},
-  {categoria:"Estrutura Física", itens:["Porcas das rodas","Mangueiras (vazamentos)","Lataria","Vidros e retrovisores"]},
-  {categoria:"Sinalização", itens:["Faróis","Lanternas","Pisca","Buzina"]},
-  {categoria:"Itens Gerais", itens:["Freio de estacionamento","Extintor de incêndio","Caixa de ferramentas"]}
-];
 
 function carregarMaquinas() {
   const script = document.createElement("script");
@@ -17,10 +14,12 @@ function carregarMaquinas() {
 
   window[callbackName] = function (data) {
     maquinas = data;
-    // preencher tipos únicos
+
     const tipos = [...new Set(data.map(m => m.tipo))];
     const tipoSelect = document.getElementById("tipoMaquina");
+
     tipoSelect.innerHTML = "<option value=''>Selecione o tipo de máquina</option>";
+
     tipos.forEach(t => {
       const opt = document.createElement("option");
       opt.value = t;
@@ -36,32 +35,45 @@ function carregarMaquinas() {
 function filtrarMaquinas() {
   const tipoSel = document.getElementById("tipoMaquina").value;
   const selectMaq = document.getElementById("maquina");
+
   selectMaq.innerHTML = "<option value=''>Selecione a máquina</option>";
-  const filtradas = maquinas.filter(m => m.tipo === tipoSel);
-  filtradas.forEach(m => {
-    const opt = document.createElement("option");
-    opt.value = m.nome;
-    opt.text = `${m.nome} (${m.placa})`;
-    selectMaq.add(opt);
-  });
+
+  maquinas
+    .filter(m => m.tipo === tipoSel)
+    .forEach(m => {
+      const opt = document.createElement("option");
+      opt.value = m.nome;
+      opt.text = `${m.nome} (${m.placa})`;
+      selectMaq.add(opt);
+    });
 }
 
 function iniciarChecklist() {
   operador = document.getElementById("operador").value;
   maquina = document.getElementById("maquina").value;
   tipo = document.getElementById("tipo").value;
-  if (!operador || !maquina) return alert("Preencha todos os campos!");
+  const tipoSelecionado = document.getElementById("tipoMaquina").value;
+
+  if (!operador || !maquina || !tipoSelecionado)
+    return alert("Preencha todos os campos!");
+
+  const checklist = checklistsPorTipo[tipoSelecionado];
+
+  if (!checklist) return alert("Checklist não encontrado para este tipo.");
 
   document.getElementById("login").style.display = "none";
   document.getElementById("checklist").style.display = "block";
-  document.getElementById("tituloChecklist").innerText = `Checklist de ${tipo} - ${maquina}`;
+  document.getElementById("tituloChecklist").innerText =
+    `Checklist de ${tipo} - ${maquina}`;
 
   const container = document.getElementById("itensContainer");
   container.innerHTML = "";
+
   checklist.forEach(sec => {
     const cat = document.createElement("h3");
     cat.innerText = sec.categoria;
     container.appendChild(cat);
+
     sec.itens.forEach(item => {
       const div = document.createElement("div");
       div.className = "item";
@@ -75,12 +87,29 @@ function iniciarChecklist() {
     });
   });
 
+  iniciarAssinatura();
+}
+
+function iniciarAssinatura() {
   const canvas = document.getElementById("assinatura");
   ctx = canvas.getContext("2d");
+
   let desenhando = false;
-  canvas.addEventListener("mousedown", e => { desenhando = true; ctx.beginPath(); ctx.moveTo(e.offsetX, e.offsetY); });
-  canvas.addEventListener("mousemove", e => { if (desenhando) { ctx.lineTo(e.offsetX, e.offsetY); ctx.stroke(); } });
-  canvas.addEventListener("mouseup", () => desenhando = false);
+
+  canvas.addEventListener("mousedown", e => {
+    desenhando = true;
+    ctx.beginPath();
+    ctx.moveTo(e.offsetX, e.offsetY);
+  });
+
+  canvas.addEventListener("mousemove", e => {
+    if (desenhando) {
+      ctx.lineTo(e.offsetX, e.offsetY);
+      ctx.stroke();
+    }
+  });
+
+  canvas.addEventListener("mouseup", () => (desenhando = false));
 }
 
 function limparAssinatura() {
@@ -89,25 +118,33 @@ function limparAssinatura() {
 }
 
 async function enviar() {
+  const tipoSelecionado = document.getElementById("tipoMaquina").value;
+  const checklistOriginal = checklistsPorTipo[tipoSelecionado];
+
   const items = [];
-  checklist.forEach(sec => {
+
+  checklistOriginal.forEach(sec => {
     sec.itens.forEach(item => {
-      const status = document.querySelector(`input[name='${item}']:checked`)?.value || "";
-      const obs = document.getElementById(`obs_${item}`).value;
-      items.push({ nome: item, status, observacao: obs });
+      items.push({
+        nome: item,
+        status: document.querySelector(`input[name='${item}']:checked`)
+          ?.value || "",
+        observacao: document.getElementById(`obs_${item}`).value
+      });
     });
   });
+
   const assinatura = document.getElementById("assinatura").toDataURL();
-  const dados = { operador, maquina, tipo, assinatura, items };
+
+  const dados = { operador, maquina, tipo, items, assinatura };
 
   const res = await fetch(API_CHECKLIST, {
     method: "POST",
-    headers: { "Content-Type": "application/json" },
     body: JSON.stringify(dados)
   });
 
   if (res.ok) alert("Checklist enviado com sucesso!");
-  else alert("Erro ao enviar checklist!");
+  else alert("Erro ao enviar o checklist!");
 }
 
 window.onload = carregarMaquinas;
