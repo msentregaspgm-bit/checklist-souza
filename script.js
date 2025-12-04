@@ -1,5 +1,5 @@
 const API_CHECKLIST = "/api/checklist";
-const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbw_fxqb7PVDReGpbHaK5D9hXe0nYEbtGewPD_Dx7Kl-sTjTe6k0Tkl9ImXXiSgwZ8Ip/exec";
+const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyHPCOhlA55vbvak_KqdIEZtSBqRtvBC1l1kTY5vjN1tGm36arLV9GcJrfnzpwNS5-m/exec";
 
 let operador, maquina, placa, tipo, ctx;
 
