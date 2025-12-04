@@ -40,12 +40,21 @@ function carregarMaquinas() {
   });
 }
 
-function carregarChecklist() {
+function iniciarChecklist() {
+  operador = document.getElementById("operador").value;
   maquina = document.getElementById("maquina").value;
   tipo = document.getElementById("tipo").value;
-  operador = document.getElementById("operador").value;
-  if (!maquina || !tipoMaquina || !operador) return;
+  tipoMaquina = document.getElementById("tipoMaquina").value;
 
+  if (!operador || !maquina || !tipoMaquina) {
+    alert("Preencha todos os campos antes de iniciar!");
+    return;
+  }
+
+  carregarChecklist();
+}
+
+function carregarChecklist() {
   const script = document.createElement("script");
   const callbackName = "callbackChecklist";
 

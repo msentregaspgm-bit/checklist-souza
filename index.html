@@ -16,13 +16,15 @@
       <select id="tipoMaquina" onchange="carregarMaquinas()">
         <option value="">Selecione o tipo de máquina</option>
       </select>
-      <select id="maquina" onchange="carregarChecklist()">
+      <select id="maquina">
         <option value="">Selecione a máquina</option>
       </select>
       <select id="tipo">
         <option value="Retirada">Retirada</option>
         <option value="Devolução">Devolução</option>
       </select>
+
+      <button class="iniciar" onclick="iniciarChecklist()">Iniciar Checklist</button>
     </div>
 
     <div id="checklist" style="display:none;">
@@ -31,7 +33,7 @@
 
       <h3>Assinatura do Operador</h3>
       <canvas id="assinatura" width="300" height="150"></canvas><br />
-      <button onclick="limparAssinatura()">Limpar Assinatura</button>
+      <button class="limpar" onclick="limparAssinatura()">Limpar Assinatura</button>
       <button class="enviar" onclick="enviar()">Enviar Checklist</button>
     </div>
   </div>
