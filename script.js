@@ -1,23 +1,16 @@
-const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyJbwS4d9c14RHrTNBjbrRlTQfZg3728tzSDOvH_kxBvenJrD4xn1wS7UGJsh7nS3VE/exec";
+const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzW8O42NFSodM3lndtKoHl8kH7KC3BqeVz8zJhYuO4GEON0RVOKc6EjYVCkE5qLh-89/exec";
 const API_CHECKLIST = "/api/checklist";
 
 let maquinas = [];
-let operador, maquina, tipo, ctx;
+let checklist = [];
+let operador, maquina, tipo, tipoMaquina, ctx;
 
-const checklist = [
-  {categoria:"Motor", itens:["Nível do óleo do motor","Nível do óleo hidráulico","Nível de arrefecimento"]},
-  {categoria:"Estrutura Física", itens:["Porcas das rodas","Mangueiras (vazamentos)","Lataria","Vidros e retrovisores"]},
-  {categoria:"Sinalização", itens:["Faróis","Lanternas","Pisca","Buzina"]},
-  {categoria:"Itens Gerais", itens:["Freio de estacionamento","Extintor de incêndio","Caixa de ferramentas"]}
-];
-
-function carregarMaquinas() {
+function carregarTiposMaquina() {
   const script = document.createElement("script");
   const callbackName = "callbackMaquinas";
 
   window[callbackName] = function (data) {
     maquinas = data;
-    // preencher tipos únicos
     const tipos = [...new Set(data.map(m => m.tipo))];
     const tipoSelect = document.getElementById("tipoMaquina");
     tipoSelect.innerHTML = "<option value=''>Selecione o tipo de máquina</option>";
@@ -29,15 +22,16 @@ function carregarMaquinas() {
     });
   };
 
-  script.src = SCRIPT_URL + "?callback=" + callbackName;
+  script.src = `${SCRIPT_URL}?callback=${callbackName}`;
   document.body.appendChild(script);
 }
 
-function filtrarMaquinas() {
-  const tipoSel = document.getElementById("tipoMaquina").value;
+function carregarMaquinas() {
+  tipoMaquina = document.getElementById("tipoMaquina").value;
   const selectMaq = document.getElementById("maquina");
   selectMaq.innerHTML = "<option value=''>Selecione a máquina</option>";
-  const filtradas = maquinas.filter(m => m.tipo === tipoSel);
+
+  const filtradas = maquinas.filter(m => m.tipo === tipoMaquina);
   filtradas.forEach(m => {
     const opt = document.createElement("option");
     opt.value = m.nome;
@@ -46,33 +40,49 @@ function filtrarMaquinas() {
   });
 }
 
-function iniciarChecklist() {
-  operador = document.getElementById("operador").value;
+function carregarChecklist() {
   maquina = document.getElementById("maquina").value;
   tipo = document.getElementById("tipo").value;
-  if (!operador || !maquina) return alert("Preencha todos os campos!");
+  operador = document.getElementById("operador").value;
+  if (!maquina || !tipoMaquina || !operador) return;
 
+  const script = document.createElement("script");
+  const callbackName = "callbackChecklist";
+
+  window[callbackName] = function (data) {
+    checklist = data;
+    montarChecklist();
+  };
+
+  script.src = `${SCRIPT_URL}?tipo=${encodeURIComponent(tipoMaquina)}&callback=${callbackName}`;
+  document.body.appendChild(script);
+}
+
+function montarChecklist() {
   document.getElementById("login").style.display = "none";
   document.getElementById("checklist").style.display = "block";
   document.getElementById("tituloChecklist").innerText = `Checklist de ${tipo} - ${maquina}`;
 
   const container = document.getElementById("itensContainer");
   container.innerHTML = "";
-  checklist.forEach(sec => {
-    const cat = document.createElement("h3");
-    cat.innerText = sec.categoria;
-    container.appendChild(cat);
-    sec.itens.forEach(item => {
-      const div = document.createElement("div");
-      div.className = "item";
-      div.innerHTML = `
-        <p>${item}</p>
-        <label><input type='radio' name='${item}' value='OK'> OK</label>
-        <label><input type='radio' name='${item}' value='Não Conforme'> N/C</label><br>
-        <textarea placeholder='Observações' id='obs_${item}'></textarea>
-      `;
-      container.appendChild(div);
-    });
+
+  let categoriaAtual = "";
+  checklist.forEach(item => {
+    if (item.categoria !== categoriaAtual) {
+      categoriaAtual = item.categoria;
+      const h3 = document.createElement("h3");
+      h3.innerText = categoriaAtual;
+      container.appendChild(h3);
+    }
+    const div = document.createElement("div");
+    div.className = "item";
+    div.innerHTML = `
+      <p>${item.item}</p>
+      <label><input type="radio" name="${item.item}" value="OK"> OK</label>
+      <label><input type="radio" name="${item.item}" value="Não Conforme"> N/C</label><br>
+      <textarea placeholder="Observações" id="obs_${item.item}"></textarea>
+    `;
+    container.appendChild(div);
   });
 
   const canvas = document.getElementById("assinatura");
@@ -90,13 +100,12 @@ function limparAssinatura() {
 
 async function enviar() {
   const items = [];
-  checklist.forEach(sec => {
-    sec.itens.forEach(item => {
-      const status = document.querySelector(`input[name='${item}']:checked`)?.value || "";
-      const obs = document.getElementById(`obs_${item}`).value;
-      items.push({ nome: item, status, observacao: obs });
-    });
+  checklist.forEach(i => {
+    const status = document.querySelector(`input[name='${i.item}']:checked`)?.value || "";
+    const obs = document.getElementById(`obs_${i.item}`).value;
+    items.push({ nome: i.item, status, observacao: obs });
   });
+
   const assinatura = document.getElementById("assinatura").toDataURL();
   const dados = { operador, maquina, tipo, assinatura, items };
 
@@ -110,4 +119,4 @@ async function enviar() {
   else alert("Erro ao enviar checklist!");
 }
 
-window.onload = carregarMaquinas;
+window.onload = carregarTiposMaquina;
