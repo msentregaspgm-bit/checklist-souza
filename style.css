@@ -78,3 +78,29 @@ canvas {
   background: #FAFAFA;
   margin-top: 10px;
 }
+
+/* Estilos para o painel administrativo (cards e tabela) */
+.card {
+  display: inline-block;
+  padding: 10px 20px;
+  border-radius: 10px;
+  color: white;
+  font-weight: bold;
+  margin: 5px;
+}
+.verde { background: #2E7D32; }
+.vermelho { background: #C62828; }
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+}
+th, td {
+  border: 1px solid #ccc;
+  padding: 8px;
+  text-align: left;
+}
+th {
+  background: #A5D6A7;
+}
