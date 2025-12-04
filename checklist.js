@@ -1,6 +1,6 @@
 // Proxy da Vercel para enviar checklists ao Google Apps Script
 export default async function handler(req, res) {
-  const TARGET_URL = "https://script.google.com/macros/s/AKfycbzlHcLcPfDvlxythlC1VneFWmicWkTdTy9K1e-kCrDQV_VEPwIqNts2EKIg-k9gNeTL/exec";
+  const TARGET_URL = "https://script.google.com/macros/s/AKfycbw_fxqb7PVDReGpbHaK5D9hXe0nYEbtGewPD_Dx7Kl-sTjTe6k0Tkl9ImXXiSgwZ8Ip/exec";
   try {
     const response = await fetch(TARGET_URL, {
       method: "POST",
