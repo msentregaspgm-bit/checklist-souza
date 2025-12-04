@@ -8,16 +8,48 @@ const API_CHECKLIST = SCRIPT_URL;
 let maquinas = [];
 let operador, maquina, tipo, ctx;
 
+// =============== CARREGAR MÁQUINAS ===============
 function carregarMaquinas() {
   const script = document.createElement("script");
   const callbackName = "callbackMaquinas";
 
   window[callbackName] = function (data) {
-    maquinas = data;
 
-    const tipos = [...new Set(data.map(m => m.tipo))];
+    console.log("DATA RECEBIDO DA PLANILHA:", data);
+
+    // 🔍 DETECTAR COLUNAS AUTOMATICAMENTE
+    maquinas = data.map(row => ({
+      tipo:
+        row.tipo ||
+        row.Tipo ||
+        row.TIPO ||
+        row[0] || "",
+
+      nome:
+        row.nome ||
+        row.Nome ||
+        row.NOME ||
+        row[1] || "",
+
+      placa:
+        row.placa ||
+        row.Placa ||
+        row.PLACA ||
+        row[2] || ""
+    }));
+
+    // 🔥 Remover header (caso a primeira linha seja títulos)
+    if (maquinas[0].tipo === "tipo" || maquinas[0].tipo === "Tipo") {
+      maquinas.shift();
+    }
+
+    // 🔥 FILTRAR ENTRADAS VAZIAS
+    maquinas = maquinas.filter(m => m.tipo && m.nome);
+
+    // ===== Preencher tipos =====
+    const tipos = [...new Set(maquinas.map(m => m.tipo))];
+
     const tipoSelect = document.getElementById("tipoMaquina");
-
     tipoSelect.innerHTML = "<option value=''>Selecione o tipo de máquina</option>";
 
     tipos.forEach(t => {
@@ -32,6 +64,7 @@ function carregarMaquinas() {
   document.body.appendChild(script);
 }
 
+// =============== FILTRAR MÁQUINAS ===============
 function filtrarMaquinas() {
   const tipoSel = document.getElementById("tipoMaquina").value;
   const selectMaq = document.getElementById("maquina");
@@ -43,11 +76,12 @@ function filtrarMaquinas() {
     .forEach(m => {
       const opt = document.createElement("option");
       opt.value = m.nome;
-      opt.text = `${m.nome} (${m.placa})`;
+      opt.text = m.placa ? `${m.nome} (${m.placa})` : m.nome;
       selectMaq.add(opt);
     });
 }
 
+// =============== INICIAR CHECKLIST ===============
 function iniciarChecklist() {
   operador = document.getElementById("operador").value;
   maquina = document.getElementById("maquina").value;
@@ -90,6 +124,7 @@ function iniciarChecklist() {
   iniciarAssinatura();
 }
 
+// =============== ASSINATURA ===============
 function iniciarAssinatura() {
   const canvas = document.getElementById("assinatura");
   ctx = canvas.getContext("2d");
@@ -117,6 +152,7 @@ function limparAssinatura() {
   ctx.clearRect(0, 0, canvas.width, canvas.height);
 }
 
+// =============== ENVIAR CHECKLIST ===============
 async function enviar() {
   const tipoSelecionado = document.getElementById("tipoMaquina").value;
   const checklistOriginal = checklistsPorTipo[tipoSelecionado];
@@ -147,4 +183,5 @@ async function enviar() {
   else alert("Erro ao enviar o checklist!");
 }
 
+// =============== INICIAR CARREGAMENTO ===============
 window.onload = carregarMaquinas;
