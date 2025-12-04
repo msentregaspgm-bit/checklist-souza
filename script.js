@@ -1,7 +1,9 @@
+const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyJbwS4d9c14RHrTNBjbrRlTQfZg3728tzSDOvH_kxBvenJrD4xn1wS7UGJsh7nS3VE/exec";
 const API_CHECKLIST = "/api/checklist";
-const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyHPCOhlA55vbvak_KqdIEZtSBqRtvBC1l1kTY5vjN1tGm36arLV9GcJrfnzpwNS5-m/exec";
 
+let maquinas = [];
 let operador, maquina, tipo, ctx;
+
 const checklist = [
   {categoria:"Motor", itens:["Nível do óleo do motor","Nível do óleo hidráulico","Nível de arrefecimento"]},
   {categoria:"Estrutura Física", itens:["Porcas das rodas","Mangueiras (vazamentos)","Lataria","Vidros e retrovisores"]},
@@ -14,19 +16,34 @@ function carregarMaquinas() {
   const callbackName = "callbackMaquinas";
 
   window[callbackName] = function (data) {
-    const sel = document.getElementById("maquina");
-    sel.innerHTML = "<option value=''>Selecione a máquina</option>";
-    data.forEach(m => {
+    maquinas = data;
+    // preencher tipos únicos
+    const tipos = [...new Set(data.map(m => m.tipo))];
+    const tipoSelect = document.getElementById("tipoMaquina");
+    tipoSelect.innerHTML = "<option value=''>Selecione o tipo de máquina</option>";
+    tipos.forEach(t => {
       const opt = document.createElement("option");
-      opt.value = m.nome;
-      opt.text = `${m.nome} (${m.placa})`;
-      sel.add(opt);
+      opt.value = t;
+      opt.text = t;
+      tipoSelect.add(opt);
     });
   };
 
-  const url = SCRIPT_URL + "?callback=" + callbackName;
-  script.src = url;
+  script.src = SCRIPT_URL + "?callback=" + callbackName;
   document.body.appendChild(script);
+}
+
+function filtrarMaquinas() {
+  const tipoSel = document.getElementById("tipoMaquina").value;
+  const selectMaq = document.getElementById("maquina");
+  selectMaq.innerHTML = "<option value=''>Selecione a máquina</option>";
+  const filtradas = maquinas.filter(m => m.tipo === tipoSel);
+  filtradas.forEach(m => {
+    const opt = document.createElement("option");
+    opt.value = m.nome;
+    opt.text = `${m.nome} (${m.placa})`;
+    selectMaq.add(opt);
+  });
 }
 
 function iniciarChecklist() {
@@ -80,7 +97,6 @@ async function enviar() {
       items.push({ nome: item, status, observacao: obs });
     });
   });
-
   const assinatura = document.getElementById("assinatura").toDataURL();
   const dados = { operador, maquina, tipo, assinatura, items };
 

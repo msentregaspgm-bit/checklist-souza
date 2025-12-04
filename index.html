@@ -8,17 +8,22 @@
   </head>
   <body>
     <div class="container">
-      <img src="logo.png" class="logo" alt="Souza Logo" />
+      <img src="logo.png" class="logo" alt="Souza" />
       <h1>Checklist de Máquinas</h1>
 
       <div id="login">
         <input id="operador" placeholder="Nome do Operador" />
-        <select id="maquina"></select>
+        <select id="tipoMaquina" onchange="filtrarMaquinas()">
+          <option value="">Selecione o tipo de máquina</option>
+        </select>
+        <select id="maquina">
+          <option value="">Selecione a máquina</option>
+        </select>
         <select id="tipo">
           <option value="Retirada">Retirada</option>
           <option value="Devolução">Devolução</option>
         </select>
-        <button onclick="iniciarChecklist()">Iniciar</button>
+        <button onclick="iniciarChecklist()">Iniciar Checklist</button>
       </div>
 
       <div id="checklist" style="display:none;">
