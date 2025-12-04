@@ -1,47 +1,42 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Checklist Souza</title>
-  <link rel="stylesheet" href="style.css">
-</head>
-<body>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Checklist Souza</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div class="container">
+      <img src="logo.png" class="logo" alt="Souza" />
+      <h1>Checklist de Máquinas</h1>
 
-<div id="login">
-  <h2>Checklist de Máquinas</h2>
+      <div id="login">
+        <input id="operador" placeholder="Nome do Operador" />
+        <select id="tipoMaquina" onchange="filtrarMaquinas()">
+          <option value="">Selecione o tipo de máquina</option>
+        </select>
+        <select id="maquina">
+          <option value="">Selecione a máquina</option>
+        </select>
+        <select id="tipo">
+          <option value="Retirada">Retirada</option>
+          <option value="Devolução">Devolução</option>
+        </select>
+        <button onclick="iniciarChecklist()">Iniciar Checklist</button>
+      </div>
 
-  <label>Operador:</label>
-  <input type="text" id="operador">
+      <div id="checklist" style="display:none;">
+        <h2 id="tituloChecklist"></h2>
+        <div id="itensContainer"></div>
 
-  <label>Tipo de Máquina:</label>
-  <select id="tipoMaquina" onchange="filtrarMaquinas()"></select>
+        <h3>Assinatura do Operador</h3>
+        <canvas id="assinatura" width="300" height="150"></canvas><br />
+        <button onclick="limparAssinatura()">Limpar</button>
+        <button class="enviar" onclick="enviar()">Enviar Checklist</button>
+      </div>
+    </div>
 
-  <label>Máquina:</label>
-  <select id="maquina"></select>
-
-  <label>Checklist:</label>
-  <select id="tipo">
-    <option value="Retirada">Retirada</option>
-    <option value="Devolução">Devolução</option>
-  </select>
-
-  <button onclick="iniciarChecklist()">Iniciar</button>
-</div>
-
-<div id="checklist" style="display:none;">
-  <h2 id="tituloChecklist"></h2>
-  <div id="itensContainer"></div>
-
-  <h3>Assinatura:</h3>
-  <canvas id="assinatura" width="300" height="150"></canvas>
-  <button onclick="limparAssinatura()">Limpar</button>
-
-  <button onclick="enviar()">Enviar</button>
-</div>
-
-<!-- Ordem correta -->
-<script src="checklists.js"></script>
-<script src="script.js"></script>
-</body>
+    <script src="script.js"></script>
+  </body>
 </html>
