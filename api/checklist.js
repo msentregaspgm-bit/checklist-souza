@@ -1,6 +1,5 @@
 export default async function handler(req, res) {
-  const TARGET_URL =
-    "https://script.google.com/macros/s/AKfycbzW8O42NFSodM3lndtKoHl8kH7KC3BqeVz8zJhYuO4GEON0RVOKc6EjYVCkE5qLh-89/exec";
+  const TARGET_URL = "https://script.google.com/macros/s/AKfycbxjE6OXjsifXH9VNtH_s4LEH3iyWWCFMuhZ9n4l4AYGeaQBQPLcyH-gQa7GGmCOyHC7/exec";
 
   try {
     const response = await fetch(TARGET_URL, {
@@ -10,6 +9,7 @@ export default async function handler(req, res) {
     });
     const text = await response.text();
     res.setHeader("Access-Control-Allow-Origin", "*");
+    res.setHeader("Access-Control-Allow-Methods", "POST,OPTIONS");
     res.status(200).json({ result: text });
   } catch (err) {
     console.error("Erro no proxy:", err);
