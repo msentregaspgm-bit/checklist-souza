@@ -1,188 +1,95 @@
+// checklists.js - Checklists por tipo de máquina
 const checklistsPorTipo = {
-  "Trator": [
-    {
-      categoria: "Motor",
-      itens: [
-        "Nível do óleo do motor",
-        "Filtro de ar",
-        "Nível de arrefecimento",
-        "Correias",
-        "Vazamentos no motor"
-      ]
-    },
-    {
-      categoria: "Elétrica",
-      itens: [
-        "Faróis dianteiros",
-        "Faróis traseiros",
-        "Setas/Pisca",
-        "Buzina",
-        "Painel funcionando"
-      ]
-    },
-    {
-      categoria: "Estrutura",
-      itens: [
-        "Pneus",
-        "Paralama",
-        "Retrovisores",
-        "Banco",
-        "Cinto de segurança"
-      ]
-    }
+  "BAZUCA": [
+    { categoria: "Motor / Sistema", itens: ["Nível de óleo do motor", "Vazamentos", "Filtro de ar", "Bateria"] },
+    { categoria: "Estrutura", itens: ["Placas e suportes", "Parafusos", "Pintura/Corrosão"] },
+    { categoria: "Segurança", itens: ["Extintor", "Sinalização", "Proteções"] }
   ],
-
-  "Pá Carregadeira": [
-    {
-      categoria: "Motor",
-      itens: [
-        "Óleo do motor",
-        "Filtro diesel",
-        "Filtro hidráulico",
-        "Nível de água/arrefecimento",
-        "Fumaça anormal"
-      ]
-    },
-    {
-      categoria: "Hidráulico",
-      itens: [
-        "Mangueiras",
-        "Cilindros",
-        "Nível do óleo hidráulico",
-        "Vazamentos",
-        "Pressão adequada"
-      ]
-    },
-    {
-      categoria: "Estrutura",
-      itens: [
-        "Caçamba",
-        "Pinos e articulação",
-        "Pneus",
-        "Escada de acesso",
-        "Vidros e portas"
-      ]
-    }
+  "CAMINHÃO": [
+    { categoria: "Motor", itens: ["Nível do óleo", "Água do radiador", "Filtro de ar"] },
+    { categoria: "Freios e Rodas", itens: ["Pastilhas/Discos", "Pneus (pressão)", "Porcas das rodas"] },
+    { categoria: "Segurança/Documentos", itens: ["Extintor", "Triângulo", "Documentação"] }
   ],
-
-  "Escavadeira": [
-    {
-      categoria: "Motor",
-      itens: [
-        "Óleo do motor",
-        "Filtro de ar",
-        "Arrefecimento",
-        "Mangueiras",
-        "Fumaça anormal"
-      ]
-    },
-    {
-      categoria: "Esteiras",
-      itens: [
-        "Tensionamento da esteira",
-        "Rolos",
-        "Correntes",
-        "Sapatas",
-        "Geral das esteiras"
-      ]
-    },
-    {
-      categoria: "Hidráulico",
-      itens: [
-        "Mangueiras",
-        "Cilindros hidráulicos",
-        "Vazamentos",
-        "Nível do óleo hidráulico",
-        "Bomba hidráulica"
-      ]
-    },
-    {
-      categoria: "Estrutura",
-      itens: [
-        "Torre",
-        "Braço",
-        "Caçamba",
-        "Vidros",
-        "Assento e cintos"
-      ]
-    }
+  "CARREGADEIRA": [
+    { categoria: "Motor", itens: ["Óleo do motor", "Filtro diesel", "Arrefecimento"] },
+    { categoria: "Hidráulico", itens: ["Mangueiras", "Cilindros", "Nível óleo hidráulico"] },
+    { categoria: "Estrutura", itens: ["Caçamba", "Pinos e articulação", "Esteios"] }
   ],
-
-  "Caminhão": [
-    {
-      categoria: "Motor",
-      itens: [
-        "Nível do óleo",
-        "Água do radiador",
-        "Filtro de ar",
-        "Correias",
-        "Vazamentos"
-      ]
-    },
-    {
-      categoria: "Elétrica",
-      itens: [
-        "Faróis",
-        "Setas",
-        "Luz de freio",
-        "Painel",
-        "Buzina"
-      ]
-    },
-    {
-      categoria: "Segurança",
-      itens: [
-        "Extintor",
-        "Triângulo",
-        "Cinto de segurança",
-        "Tacógrafo",
-        "Documentação"
-      ]
-    },
-    {
-      categoria: "Estrutura",
-      itens: [
-        "Pneus",
-        "Lataria",
-        "Retrovisores",
-        "Portas",
-        "Para-choque"
-      ]
-    }
+  "COLHEITADEIRA": [
+    { categoria: "Motor/Transmissão", itens: ["Óleo motor", "Transmissão", "Correias"] },
+    { categoria: "Sistema de Corte", itens: ["Lâminas", "Cadeias", "Tensionamento"] },
+    { categoria: "Segurança", itens: ["Proteções", "Sinalização", "Iluminação"] }
   ],
-
-  "Mini Carregadeira": [
-    {
-      categoria: "Motor",
-      itens: [
-        "Óleo do motor",
-        "Filtro de ar",
-        "Nível de água",
-        "Fumaça",
-        "Vazamentos"
-      ]
-    },
-    {
-      categoria: "Hidráulico",
-      itens: [
-        "Mangueiras",
-        "Conexões",
-        "Cilindros",
-        "Nível do óleo hidráulico",
-        "Travas de segurança"
-      ]
-    },
-    {
-      categoria: "Estrutura",
-      itens: [
-        "Rodas",
-        "Caçamba",
-        "Cabine",
-        "Assento",
-        "Cinto de segurança"
-      ]
-    }
+  "DISTRIBUIDOR": [
+    { categoria: "Motor", itens: ["Nível óleo", "Filtro", "Vazamentos"] },
+    { categoria: "Distribuição", itens: ["Bicos", "Bombas", "Controle de vazão"] },
+    { categoria: "Estrutura", itens: ["Hastes", "Suportes", "Acionamentos"] }
+  ],
+  "EMBOLSADORA": [
+    { categoria: "Sistema Hidráulico", itens: ["Mangueiras", "Cilindros", "Vazamentos"] },
+    { categoria: "Alimentação", itens: ["Esteiras", "Correias", "Sensores"] },
+    { categoria: "Elétrica", itens: ["Painel", "Sensores", "Luzes"] }
+  ],
+  "EMPILHADEIRA": [
+    { categoria: "Motor/Elétrico", itens: ["Bateria/charge", "Fusíveis", "Conexões"] },
+    { categoria: "Hidráulico", itens: ["Cilindros", "Mangueiras", "Vazamentos"] },
+    { categoria: "Segurança", itens: ["Forks", "Ganchos", "Freio estacionamento"] }
+  ],
+  "ESCAVADEIRA HIDRAULICA": [
+    { categoria: "Motor", itens: ["Óleo motor", "Filtro ar", "Arrefecimento"] },
+    { categoria: "Hidráulico", itens: ["Mangueiras", "Cilindros", "Vazamentos"] },
+    { categoria: "Esteiras/Undercarriage", itens: ["Rolos", "Tensionamento", "Sapatas"] }
+  ],
+  "F4000": [
+    { categoria: "Motor", itens: ["Nível óleo", "Radiador", "Filtro ar"] },
+    { categoria: "Freios", itens: ["Pastilhas", "Fluido", "Mangueiras"] },
+    { categoria: "Carroceria", itens: ["Caçamba", "Trincos", "Sinalização"] }
+  ],
+  "GRADE": [
+    { categoria: "Estrutura", itens: ["Lâminas", "Parafusos", "Suportes"] },
+    { categoria: "Acionamento", itens: ["Articulações", "Rolamentos", "Lubrificação"] }
+  ],
+  "GRAN": [
+    { categoria: "Motor/Sistema", itens: ["Óleo", "Filtros", "Vazamentos"] },
+    { categoria: "Operação", itens: ["Transmissão", "Correias", "Segurança"] }
+  ],
+  "NIVELADORA": [
+    { categoria: "Motor/Transmissão", itens: ["Óleo", "Filtro", "Transmissão"] },
+    { categoria: "Lâminas e Controle", itens: ["Lâminas", "Atuadores", "Nível"] }
+  ],
+  "PLANTADEIRA": [
+    { categoria: "Semeamento", itens: ["Distribuição/semente", "Dosador", "Esteiras"] },
+    { categoria: "Estrutura", itens: ["Linha de semeadura", "Suportes", "Parafusos"] }
+  ],
+  "PLATAFORMA": [
+    { categoria: "Estrutura", itens: ["Pisos", "Grades", "Travas"] },
+    { categoria: "Elevação", itens: ["Mecanismo", "Hidráulicos", "Controles"] }
+  ],
+  "PULVERIZADOR": [
+    { categoria: "Bomba/Sistema", itens: ["Bomba", "Filtros", "Bicos"] },
+    { categoria: "Tanque", itens: ["Limpeza", "Válvulas", "Níveis"] }
+  ],
+  "REBOKE": [
+    { categoria: "Estrutura", itens: ["Engate", "Trincos", "Suportes"] },
+    { categoria: "Rodas", itens: ["Pneus", "Rolamentos", "Porcas"] }
+  ],
+  "SUBSOLADOR": [
+    { categoria: "Estrutura", itens: ["Garfos", "Parafusos", "Suportes"] },
+    { categoria: "Acionamento", itens: ["Acoplamento", "Lubrificação", "Transmissão"] }
+  ],
+  "TMS": [
+    { categoria: "Sistema", itens: ["Comunicação", "GPS", "Sensores"] },
+    { categoria: "Energia", itens: ["Bateria", "Conexões", "Antena"] }
+  ],
+  "TRATOR": [
+    { categoria: "Motor", itens: ["Nível do óleo do motor", "Filtro ar", "Arrefecimento"] },
+    { categoria: "Transmissão", itens: ["Embreagem", "Marchas", "Eixos"] },
+    { categoria: "Estrutura", itens: ["Pneus", "Retrovisores", "Banco"] }
   ]
 };
 
+// compatibilidade global para scripts que não usam modules
+if (typeof window !== "undefined") {
+  window.checklistsPorTipo = checklistsPorTipo;
+}
 export default checklistsPorTipo;
