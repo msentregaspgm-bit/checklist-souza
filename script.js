@@ -1,4 +1,4 @@
-const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxjE6OXjsifXH9VNtH_s4LEH3iyWWCFMuhZ9n4l4AYGeaQBQPLcyH-gQa7GGmCOyHC7/exec";
+const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxGpBIOFLqXlkWhfVECVOtv7sWMjHrvIkQekIzNrlP_9wBXo7QQup_21rADNAbTZV0/exec";
 const API_CHECKLIST = "/api/checklist";
 
 let maquinas = [];
