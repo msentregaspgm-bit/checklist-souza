@@ -22,7 +22,7 @@ function carregarTiposMaquina() {
     });
   };
 
-  script.src = `${SCRIPT_URL}?callback=${callbackName}`;
+  script.src = `${SCRIPT_URL}?view=maquinas&callback=${callbackName}`;
   document.body.appendChild(script);
 }
 
