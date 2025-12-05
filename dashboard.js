@@ -1,4 +1,4 @@
-const SCRIPT_URL="https://script.google.com/macros/s/AKfycbyJNTu9JUQ4wtPZmgA01GGhQaWyC0x_HxcsT6KZWH8pZtlVz203l8I7y5glFxfaqPlO/exec";
+const SCRIPT_URL="https://script.google.com/macros/s/AKfycbwxJkynCbAnts5Qhjg4hhDIlpd9lVTHZMm5UrAty5bXa6l6QIBwbBJ1HZWXmDHvHYz6/exec";
 window.onload=async()=>{const e=await fetch(`${SCRIPT_URL}?action=listarChecklists`),t=await e.json();atualizarCards(t),montarTabela(t),gerarGraficos(t)};
 function atualizarCards(e){const t=e.length,a=e.reduce((e,t)=>e+t.total_nc,0),n=t?Math.round((t-a)/t*100):0,o=e.filter(e=>e.total_nc>0).length;document.getElementById("totalChecklists").innerText=`Total: ${t}`,document.getElementById("percentualOK").innerText=`Conformidade: ${n}%`,document.getElementById("maquinasNC").innerText=`Máquinas com N/C: ${o}`}
 function montarTabela(e){const t=document.querySelector("#tabelaChecklists tbody");t.innerHTML="",e.slice(-20).reverse().forEach(e=>{const a=document.createElement("tr");a.innerHTML=`<td>${e.data}</td><td>${e.operador}</td><td>${e.maquina}</td><td>${e.tipo}</td><td>${e.total_nc}</td>`,t.appendChild(a)})}

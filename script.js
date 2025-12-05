@@ -1,4 +1,4 @@
-const SCRIPT_URL="https://script.google.com/macros/s/AKfycbyJNTu9JUQ4wtPZmgA01GGhQaWyC0x_HxcsT6KZWH8pZtlVz203l8I7y5glFxfaqPlO/exec";
+const SCRIPT_URL="https://script.google.com/macros/s/AKfycbwxJkynCbAnts5Qhjg4hhDIlpd9lVTHZMm5UrAty5bXa6l6QIBwbBJ1HZWXmDHvHYz6/exec";
 let maquinas=[],checklist=[],operador,maquina,tipo,tipoMaquina,ctx;
 function mostrarLoading(e){document.getElementById("loading").style.display=e?"block":"none"}
 function carregarTiposMaquina(){mostrarLoading(!0);const e=document.createElement("script"),t="callbackMaquinas";window[t]=function(e){maquinas=e;const t=[...new Set(e.map(e=>e.tipo))],a=document.getElementById("tipoMaquina");a.innerHTML="<option value=''>Selecione o tipo de máquina</option>",t.forEach(e=>{const t=document.createElement("option");t.value=e,t.text=e,a.add(t)}),mostrarLoading(!1)},e.src=`${SCRIPT_URL}?action=listarMaquinas&callback=${t}`,document.body.appendChild(e)}
