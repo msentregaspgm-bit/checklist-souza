@@ -23,6 +23,7 @@
         <option value="Retirada">Retirada</option>
         <option value="Devolução">Devolução</option>
       </select>
+
       <button class="iniciar" onclick="iniciarChecklist()">Iniciar Checklist</button>
     </div>
 
@@ -33,12 +34,10 @@
       <h3>Assinatura do Operador</h3>
       <canvas id="assinatura" width="300" height="150"></canvas><br />
       <button class="limpar" onclick="limparAssinatura()">Limpar Assinatura</button>
-      <button class="voltar" onclick="voltarInicio()">Voltar ao Início</button>
       <button class="enviar" onclick="enviar()">Enviar Checklist</button>
     </div>
   </div>
-  <div id="loading" style="display:none; text-align:center;">Carregando...</div>
-  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
   <script src="script.js"></script>
 </body>
 </html>
