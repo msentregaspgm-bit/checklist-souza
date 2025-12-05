@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Dashboard - Checklist Souza</title>
+  <link rel="stylesheet" href="style.css" />
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+  <div class="container">
+    <h1>Dashboard - Checklists</h1>
+    <div id="cards">
+      <div class="card verde" id="totalChecklists">Total: 0</div>
+      <div class="card verde" id="percentualOK">Conformidade: 0%</div>
+      <div class="card vermelho" id="maquinasNC">Máquinas com N/C: 0</div>
+    </div>
+    <canvas id="graficoTipo" height="100"></canvas>
+    <canvas id="graficoNC" height="100"></canvas>
+    <h3>Últimos Checklists</h3>
+    <table id="tabelaChecklists"><thead><tr><th>Data</th><th>Operador</th><th>Máquina</th><th>Tipo</th><th>Não Conformes</th></tr></thead><tbody></tbody></table>
+  </div>
+  <script src="dashboard.js"></script>
+</body>
+</html>

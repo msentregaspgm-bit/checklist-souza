@@ -1,106 +1,20 @@
-body {
-  font-family: "Segoe UI", Arial, sans-serif;
-  background: #E8F5E9;
-  margin: 0;
-  padding: 0;
-  color: #1B5E20;
-}
-.container {
-  max-width: 650px;
-  margin: 30px auto;
-  background: white;
-  padding: 25px;
-  border-radius: 18px;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.15);
-}
-.logo {
-  display: block;
-  width: 120px;
-  margin: 0 auto 10px;
-}
-h1 {
-  text-align: center;
-  color: #1B5E20;
-  margin-bottom: 20px;
-}
-h2, h3 {
-  color: #2E7D32;
-  margin-top: 20px;
-}
-input, select, textarea {
-  width: 100%;
-  padding: 10px;
-  margin: 8px 0;
-  border-radius: 8px;
-  border: 1px solid #A5D6A7;
-  font-size: 15px;
-}
-button {
-  border: none;
-  border-radius: 8px;
-  padding: 12px 20px;
-  margin: 10px 0;
-  cursor: pointer;
-  font-size: 16px;
-  transition: 0.2s;
-}
-button:hover {
-  transform: scale(1.03);
-}
-.iniciar {
-  width: 100%;
-  background: #1B5E20;
-  color: white;
-}
-.enviar {
-  width: 100%;
-  background: #2E7D32;
-  color: white;
-}
-.limpar {
-  background: #A5D6A7;
-  color: #1B5E20;
-  margin-right: 10px;
-}
-.item {
-  background: #F1F8E9;
-  border-radius: 8px;
-  padding: 10px;
-  margin-bottom: 10px;
-  border-left: 4px solid #66BB6A;
-}
-textarea {
-  height: 60px;
-  resize: vertical;
-}
-canvas {
-  border: 1px solid #A5D6A7;
-  background: #FAFAFA;
-  margin-top: 10px;
-}
-
-/* Estilos para o painel administrativo (cards e tabela) */
-.card {
-  display: inline-block;
-  padding: 10px 20px;
-  border-radius: 10px;
-  color: white;
-  font-weight: bold;
-  margin: 5px;
-}
-.verde { background: #2E7D32; }
-.vermelho { background: #C62828; }
-
-table {
-  width: 100%;
-  border-collapse: collapse;
-  margin-top: 20px;
-}
-th, td {
-  border: 1px solid #ccc;
-  padding: 8px;
-  text-align: left;
-}
-th {
-  background: #A5D6A7;
-}
+body{font-family:'Segoe UI',Arial,sans-serif;background:#E8F5E9;margin:0;padding:0;color:#1B5E20}
+.container{max-width:650px;margin:30px auto;background:white;padding:25px;border-radius:18px;box-shadow:0 4px 10px rgba(0,0,0,0.15)}
+.logo{display:block;width:120px;margin:0 auto 10px}
+h1{text-align:center;color:#1B5E20;margin-bottom:20px}
+h2,h3{color:#2E7D32;margin-top:20px}
+input,select,textarea{width:100%;padding:10px;margin:8px 0;border-radius:8px;border:1px solid #A5D6A7;font-size:15px}
+button{border:none;border-radius:8px;padding:12px 20px;margin:10px 0;cursor:pointer;font-size:16px;transition:0.2s}
+button:hover{transform:scale(1.03)}
+.iniciar{width:100%;background:#1B5E20;color:white}
+.enviar{width:100%;background:#2E7D32;color:white}
+.limpar{background:#A5D6A7;color:#1B5E20;margin-right:10px}
+.voltar{background:#8BC34A;color:white;margin-right:10px}
+.item{background:#F1F8E9;border-radius:8px;padding:10px;margin-bottom:10px;border-left:4px solid #66BB6A}
+textarea{height:60px;resize:vertical}
+canvas{border:1px solid #A5D6A7;background:#FAFAFA;margin-top:10px}
+.card{display:inline-block;padding:10px 20px;border-radius:10px;color:white;font-weight:bold;margin:5px}
+.verde{background:#2E7D32}.vermelho{background:#C62828}
+table{width:100%;border-collapse:collapse;margin-top:20px}
+th,td{border:1px solid #ccc;padding:8px;text-align:left}
+th{background:#A5D6A7}
